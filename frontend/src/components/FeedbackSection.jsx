@@ -11,8 +11,8 @@ const FeedbackSection = ({ feedback, loading, error, handleReview }) => {
         <span className="font-bold uppercase tracking-wider text-xs">AI Insights</span>
       </div>
 
-      <div className="glass-card rounded-2xl h-[600px] overflow-hidden flex flex-col border border-white/10">
-        <div className="h-full overflow-y-auto p-8 custom-scrollbar">
+      <div className="glass-card rounded-2xl h-[500px] lg:h-[600px] overflow-hidden flex flex-col border border-white/10">
+        <div className="h-full overflow-y-auto p-5 lg:p-8">
           <AnimatePresence mode="wait">
             {feedback ? (
               <motion.div

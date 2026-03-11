@@ -17,12 +17,12 @@ const Header = ({ language, setLanguage }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-4 bg-white/5 p-1.5 rounded-2xl border border-white/10 backdrop-blur-sm">
+      <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-2xl border border-white/10 backdrop-blur-sm overflow-x-auto no-scrollbar max-w-full">
         {LANGUAGES.map((lang) => (
           <button
             key={lang.value}
             onClick={() => setLanguage(lang.value)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
               language === lang.value
                 ? 'bg-indigo-600 text-white shadow-lg'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'

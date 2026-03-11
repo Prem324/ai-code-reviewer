@@ -3,6 +3,17 @@ import Editor from '@monaco-editor/react';
 import { Terminal, Copy, Save, Zap } from 'lucide-react';
 
 const CodeEditor = ({ code, setCode, language, handleReview, loading }) => {
+  const downloadCode = () => {
+    const element = document.createElement("a");
+    const file = new Blob([code], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    const extension = language === 'python' ? 'py' : language === 'cpp' ? 'cpp' : language === 'java' ? 'java' : 'js';
+    element.download = `code_review.${extension}`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   return (
     <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between mb-2">
@@ -14,17 +25,24 @@ const CodeEditor = ({ code, setCode, language, handleReview, loading }) => {
           <button 
             className="p-2 rounded-lg hover:bg-white/5 transition-colors text-slate-400" 
             title="Copy Code"
-            onClick={() => navigator.clipboard.writeText(code)}
+            onClick={() => {
+              navigator.clipboard.writeText(code);
+              alert('Code copied to clipboard!');
+            }}
           >
             <Copy size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-white/5 transition-colors text-slate-400" title="Save File">
+          <button 
+            className="p-2 rounded-lg hover:bg-white/5 transition-colors text-slate-400" 
+            title="Save File"
+            onClick={downloadCode}
+          >
             <Save size={16} />
           </button>
         </div>
       </div>
       
-      <div className="glass-card rounded-2xl overflow-hidden h-[600px] border border-white/10 relative group">
+      <div className="glass-card rounded-2xl overflow-hidden h-[450px] md:h-[500px] lg:h-[600px] border border-white/10 relative group">
         <Editor
           height="100%"
           language={language}
@@ -38,7 +56,11 @@ const CodeEditor = ({ code, setCode, language, handleReview, loading }) => {
             lineNumbers: 'on',
             roundedSelection: true,
             padding: { top: 20 },
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            scrollbar: {
+              vertical: 'hidden',
+              horizontal: 'hidden'
+            }
           }}
         />
         
