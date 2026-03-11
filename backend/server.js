@@ -18,15 +18,8 @@ app.use(express.json());
 // Routes
 app.use('/api', reviewRoutes);
 
-// Serve Frontend in Production
-const frontendPath = path.join(__dirname, '../frontend/dist');
-app.use(express.static(frontendPath));
-
-app.get('*', (req, res) => {
-    // Check if the request is not for an API route
-    if (!req.url.startsWith('/api')) {
-        res.sendFile(path.join(frontendPath, 'index.html'));
-    }
+app.get('/', (req, res) => {
+    res.send('AI Code Reviewer API is running...');
 });
 
 // Error Handling
