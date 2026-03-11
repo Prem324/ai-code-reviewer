@@ -15,6 +15,14 @@ function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    // Wake up backend on Render free tier
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const baseUrl = apiUrl.replace('/api', '');
+    axios.get(baseUrl).catch(() => {
+      // Silently catch errors; the goal is just to trigger the spin-up
+      console.log('Sending wake-up ping to backend...');
+    });
+
     const timer = setTimeout(() => setShowSplash(false), 2500);
     return () => clearTimeout(timer);
   }, []);
